@@ -644,11 +644,16 @@ main {
     width: calc(100% + (var(--page-gutter) * 2));
     max-width: none;
     margin-inline: calc(var(--page-gutter) * -1);
+    background: #d8aa18;
+    opacity: 0.99;
 }
 
 .editorial-image--fullscreen img {
     height: min(82svh, 58rem);
     object-position: center;
+    
+    opacity: 0.9;
+    
 }
 
 .editorial-image--small img {
