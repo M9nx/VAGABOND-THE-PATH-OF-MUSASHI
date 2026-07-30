@@ -638,6 +638,9 @@ main {
 
 .editorial-image--wide img {
     aspect-ratio: 16 / 9;
+    background: #d8aa18;
+    opacity: 0.9;
+    mix-blend-mode: multiply;
 }
 
 .editorial-image--fullscreen {
