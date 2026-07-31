@@ -1,0 +1,21 @@
+{
+  "name": "vagabond-landing-page",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A cinematic editorial landing-page tribute to Miyamoto Musashi from Takehiko Inoue's Vagabond.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "astro check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.7.10",
+    "gsap": "^3.13.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.3"
+  }
+}
