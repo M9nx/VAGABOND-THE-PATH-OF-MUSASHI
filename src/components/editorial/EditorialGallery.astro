@@ -1,0 +1,30 @@
+---
+import type { ChapterImage } from '~/data/chapters';
+import EditorialImage from './EditorialImage.astro';
+
+interface Props {
+  variant: 'split' | 'asymmetric';
+  images: ChapterImage[];
+  section?: 'light' | 'dark';
+}
+
+const { variant, images, section = 'light' } = Astro.props;
+---
+
+<div class={`editorial-gallery editorial-gallery--${variant}`}>
+  {
+    images.map((image) => (
+      <EditorialImage
+        src={image.src}
+        alt={image.alt}
+        number={image.number}
+        title={image.title}
+        description={image.description}
+        variant={image.variant}
+        overlay={image.overlay}
+        objectPosition={image.objectPosition}
+        section={section}
+      />
+    ))
+  }
+</div>

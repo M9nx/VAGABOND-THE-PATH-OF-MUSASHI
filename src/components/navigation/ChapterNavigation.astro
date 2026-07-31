@@ -1,0 +1,28 @@
+---
+import { chapters } from '~/data/chapters';
+
+const navItems = [
+  { id: 'introduction', number: '00', label: 'Introduction' },
+  ...chapters.map((chapter) => ({
+    id: chapter.id,
+    number: chapter.number,
+    label: chapter.navigationLabel,
+  })),
+];
+---
+
+<ul class="site-nav__links" aria-label="Chapters">
+  {
+    navItems.map((item) => (
+      <li>
+        <a
+          href={`#${item.id}`}
+          data-nav-item={item.id}
+          aria-current="false"
+        >
+          <span>{item.number}</span> {item.label}
+        </a>
+      </li>
+    ))
+  }
+</ul>

@@ -1,0 +1,33 @@
+<a class="hero__scroll-link" href="#introduction">
+  <slot>Scroll to begin</slot>
+</a>
+
+<style>
+  .hero__scroll-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    transition: color var(--duration-fast) ease;
+  }
+
+  .hero__scroll-link::after {
+    width: 2.8rem;
+    height: 1px;
+    content: "";
+    background: currentColor;
+    transition: width var(--duration-fast) var(--ease-out);
+  }
+
+  .hero__scroll-link:hover {
+    color: var(--white);
+  }
+
+  .hero__scroll-link:hover::after {
+    width: 4.4rem;
+  }
+</style>

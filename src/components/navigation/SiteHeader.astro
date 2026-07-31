@@ -1,0 +1,40 @@
+---
+import ChapterNavigation from './ChapterNavigation.astro';
+import MobileNavigation from './MobileNavigation.astro';
+---
+
+<header class="site-header">
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="site-nav__brand" href="#home">
+      <span class="site-nav__brand-name">Vagabond</span>
+      <span class="site-nav__brand-subtitle">The Path of Musashi</span>
+    </a>
+
+    <p class="site-nav__chapter" id="current-chapter">
+      <span class="site-nav__chapter-number">00</span>
+      <span class="site-nav__chapter-name">Prologue</span>
+    </p>
+
+    <ChapterNavigation />
+
+    <button
+      class="site-nav__menu-button"
+      type="button"
+      aria-controls="mobile-nav"
+      aria-expanded="false"
+      aria-label="Open chapter navigation"
+    >
+      Menu
+    </button>
+  </nav>
+
+  <MobileNavigation />
+</header>
+
+<script>
+  import { initMobileNavigation } from '~/scripts/animations/navigation';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initMobileNavigation();
+  });
+</script>

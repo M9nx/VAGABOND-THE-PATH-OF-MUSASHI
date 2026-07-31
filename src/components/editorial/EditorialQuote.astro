@@ -1,0 +1,12 @@
+---
+interface Props {
+  text: string;
+  wide?: boolean;
+}
+
+const { text, wide = false } = Astro.props;
+---
+
+<blockquote class={`editorial-quote${wide ? ' editorial-quote--wide' : ''}`}>
+  <p class="heading-quote">{text}</p>
+</blockquote>

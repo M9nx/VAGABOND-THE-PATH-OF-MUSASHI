@@ -1,0 +1,34 @@
+---
+import { chapters } from '~/data/chapters';
+
+const navItems = [
+  { id: 'introduction', number: '00', label: 'Introduction' },
+  ...chapters.map((chapter) => ({
+    id: chapter.id,
+    number: chapter.number,
+    label: chapter.navigationLabel,
+  })),
+];
+---
+
+<div class="mobile-nav" id="mobile-nav" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Chapter navigation">
+  <button class="mobile-nav__close" type="button" aria-controls="mobile-nav" aria-label="Close navigation">
+    Close
+  </button>
+
+  <ul class="mobile-nav__links">
+    {
+      navItems.map((item) => (
+        <li>
+          <a
+            href={`#${item.id}`}
+            data-mobile-nav-item={item.id}
+            aria-current="false"
+          >
+            <span>{item.number}</span> {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>

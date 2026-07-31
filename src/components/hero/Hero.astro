@@ -1,0 +1,175 @@
+---
+import posterImage from '~/assets/images/beast/portrait.png';
+import ScrollIndicator from './ScrollIndicator.astro';
+---
+
+<section id="home" class="hero" aria-label="Introduction">
+  <div class="hero__media" aria-hidden="true">
+    <video
+      class="hero__video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster={posterImage.src}
+    >
+      <source src="/videos/musashi-hero.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero__overlay"></div>
+  </div>
+
+  <div class="hero__content">
+    <div class="hero__headline">
+      <p class="hero__eyebrow">A visual study of Miyamoto Musashi</p>
+      <h1 class="hero__title heading-hero">Vagabond</h1>
+    </div>
+
+    <div class="hero__support">
+      <p class="hero__subtitle">The path from violence to understanding</p>
+      <blockquote class="hero__question">
+        <p>What does it truly mean to be strong?</p>
+      </blockquote>
+    </div>
+
+    <p class="hero__kanji" aria-hidden="true">武蔵</p>
+  </div>
+
+  <div class="hero__footer">
+    <p class="hero__chapter">00 — Prologue</p>
+    <ScrollIndicator />
+  </div>
+</section>
+
+<script>
+  import { initHeroAnimations } from '~/scripts/animations/hero';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initHeroAnimations();
+  });
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    min-height: 100svh;
+    padding:
+      calc(var(--header-height) + clamp(2rem, 6vh, 5rem))
+      var(--page-gutter)
+      clamp(2rem, 5vh, 4rem);
+    color: var(--white);
+    background: var(--ink);
+  }
+
+  .hero__media,
+  .hero__overlay {
+    position: absolute;
+    z-index: var(--z-hero-media);
+    inset: 0;
+  }
+
+  .hero__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    filter:
+      grayscale(1)
+      contrast(1.07)
+      brightness(0.72);
+  }
+
+  .hero__overlay {
+    z-index: var(--z-hero-overlay);
+    background:
+      linear-gradient(
+        90deg,
+        rgba(8, 8, 7, 0.93) 0%,
+        rgba(8, 8, 7, 0.66) 38%,
+        rgba(8, 8, 7, 0.22) 68%,
+        rgba(8, 8, 7, 0.52) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(8, 8, 7, 0.32) 0%,
+        transparent 32%,
+        rgba(8, 8, 7, 0.78) 100%
+      );
+  }
+
+  .hero__content {
+    align-self: center;
+    width: min(100%, var(--content-max));
+    margin-inline: auto;
+  }
+
+  .hero__eyebrow {
+    margin-bottom: clamp(1.25rem, 2vw, 2rem);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: clamp(0.63rem, 0.9vw, 0.78rem);
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .hero__title {
+    max-width: 10ch;
+  }
+
+  .hero__subtitle {
+    width: min(100%, 38rem);
+    margin-top: clamp(2rem, 5vh, 4rem);
+    padding-top: 1rem;
+    color: rgba(255, 255, 255, 0.82);
+    border-top: 1px solid rgba(255, 255, 255, 0.32);
+    font-size: clamp(1rem, 1.5vw, 1.35rem);
+    letter-spacing: 0.015em;
+  }
+
+  .hero__question {
+    width: min(100%, 34rem);
+    margin-top: clamp(1rem, 2.5vh, 1.8rem);
+    font-family: var(--font-serif);
+    font-size: clamp(1.35rem, 2.4vw, 2.35rem);
+    font-style: italic;
+    line-height: 1.18;
+  }
+
+  .hero__kanji {
+    position: absolute;
+    right: var(--page-gutter);
+    bottom: calc(var(--page-gutter) + var(--header-height));
+    color: rgba(255, 255, 255, 0.06);
+    font-size: clamp(6rem, 18vw, 18rem);
+    font-weight: 900;
+    line-height: 1;
+    writing-mode: vertical-rl;
+    pointer-events: none;
+  }
+
+  .hero__footer {
+    align-self: end;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: min(100%, var(--content-max));
+    margin-inline: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.28);
+  }
+
+  .hero__chapter {
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .hero__kanji {
+      display: none;
+    }
+  }
+</style>

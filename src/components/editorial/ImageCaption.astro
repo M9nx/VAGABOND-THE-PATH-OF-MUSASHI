@@ -1,0 +1,15 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  description?: string;
+}
+
+const { number, title, description } = Astro.props;
+---
+
+<figcaption class="image-caption">
+  <span class="image-caption__number">{number}</span>
+  <span class="image-caption__title">{title}</span>
+  {description && <span class="image-caption__description">{description}</span>}
+</figcaption>

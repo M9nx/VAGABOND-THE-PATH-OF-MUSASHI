@@ -1,0 +1,46 @@
+---
+import { chapters } from '~/data/chapters';
+---
+
+<footer class="site-footer">
+  <div class="site-footer__top">
+    <div class="site-footer__brand">
+      <a href="#home" class="site-footer__logo">Vagabond</a>
+      <p>
+        A visual editorial tribute to the journey of Miyamoto Musashi.
+      </p>
+    </div>
+
+    <nav class="site-footer__navigation" aria-label="Footer navigation">
+      <h2>Chapters</h2>
+      <ul>
+        {
+          chapters.map((chapter) => (
+            <li>
+              <a href={`#${chapter.id}`}>
+                {chapter.number} — {chapter.navigationLabel}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-footer__credits">
+      <h2>Credits</h2>
+      <p>
+        Designed and developed by <strong>Your Name</strong>
+      </p>
+      <p>
+        Inspired by Takehiko Inoue’s <cite>Vagabond</cite>.
+      </p>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <p>
+      Educational fan project. Vagabond and its characters belong to their respective creators and publishers.
+    </p>
+    <p>&copy; 2026 Vagabond Tribute</p>
+  </div>
+</footer>

@@ -1,0 +1,20 @@
+---
+import type { ChapterMetaItem } from '~/data/chapters';
+
+interface Props {
+  meta: ChapterMetaItem[];
+}
+
+const { meta } = Astro.props;
+---
+
+<dl class="chapter-meta">
+  {
+    meta.map((item) => (
+      <div class="chapter-meta__item">
+        <dt>{item.label}</dt>
+        <dd>{item.value}</dd>
+      </div>
+    ))
+  }
+</dl>

@@ -1,0 +1,134 @@
+---
+import type { Chapter } from '~/data/chapters';
+import ChapterHeader from './ChapterHeader.astro';
+import EditorialImage from './EditorialImage.astro';
+import EditorialGallery from './EditorialGallery.astro';
+import EditorialQuote from './EditorialQuote.astro';
+
+interface Props {
+  chapter: Chapter;
+}
+
+const { chapter } = Astro.props;
+
+const chapterSuffix = chapter.id.replace('chapter-', '');
+const sectionTheme = ['fear', 'other-path', 'ending'].includes(chapterSuffix)
+  ? 'dark'
+  : 'light';
+
+const baseClass = `chapter chapter--${chapter.id.replace('chapter-', '')}`;
+---
+
+<section id={chapter.id} class={baseClass} data-chapter={chapter.id}>
+  <ChapterHeader
+    number={chapter.number}
+    eyebrow={chapter.eyebrow}
+    title={chapter.title}
+    meta={chapter.meta}
+  />
+
+  {
+    chapter.featuredImage && (
+      <EditorialImage
+        src={chapter.featuredImage.src}
+        alt={chapter.featuredImage.alt}
+        number={chapter.featuredImage.number}
+        title={chapter.featuredImage.title}
+        description={chapter.featuredImage.description}
+        variant={chapter.featuredImage.variant}
+        overlay={chapter.featuredImage.overlay}
+        objectPosition={chapter.featuredImage.objectPosition}
+        section={sectionTheme}
+      />
+    )
+  }
+
+  {
+    chapter.narrative.length > 0 && (
+      <div class={`chapter__narrative chapter__narrative--${chapter.narrativeVariant || 'offset'}`}>
+        {chapter.narrative.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    chapter.gallery && (
+      <EditorialGallery
+        variant={chapter.gallery.variant}
+        images={chapter.gallery.images}
+        section={sectionTheme}
+      />
+    )
+  }
+
+  {
+    chapter.quote && (
+      <EditorialQuote text={chapter.quote.text} wide={chapter.quote.wide} />
+    )
+  }
+
+  {
+    chapter.comparison && (
+      <div class="comparison">
+        {chapter.comparison.map((side) => (
+          <article class="comparison__side">
+            <p class="comparison__label">{side.label}</p>
+            <h3 class="comparison__title heading-comparison">{side.title}</h3>
+            <p class="comparison__text">{side.text}</p>
+            {side.image ? (
+              <EditorialImage
+                src={side.image.src}
+                alt={side.image.alt}
+                number={side.image.number}
+                title={side.image.title}
+                variant={side.image.variant}
+                overlay={side.image.overlay}
+                section={sectionTheme}
+              />
+            ) : (
+              <div class="comparison__placeholder">
+                <p>Add a Sasaki Kojirō image here.</p>
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    chapter.beliefComparison && (
+      <div class="belief-comparison">
+        {chapter.beliefComparison.map((column) => (
+          <div class="belief-comparison__column">
+            <p class="belief-comparison__label">{column.label}</p>
+            <dl>
+              {column.items.map((item) => (
+                <div>
+                  <dt>{item.term}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    chapter.endingStatement && (
+      <blockquote class="ending-statement">
+        <p>{chapter.endingStatement}</p>
+      </blockquote>
+    )
+  }
+
+  {
+    chapter.returnLink && (
+      <a class="return-link" href="#home">Return to the beginning</a>
+    )
+  }
+</section>

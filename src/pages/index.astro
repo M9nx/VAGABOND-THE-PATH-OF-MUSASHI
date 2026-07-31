@@ -1,0 +1,65 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SiteHeader from '~/components/navigation/SiteHeader.astro';
+import Hero from '~/components/hero/Hero.astro';
+import ChapterSection from '~/components/editorial/ChapterSection.astro';
+import SiteFooter from '~/components/SiteFooter.astro';
+import { chapters } from '~/data/chapters';
+
+const title = 'Vagabond — The Path of Musashi';
+const description = 'A visual editorial tribute to Miyamoto Musashi from Takehiko Inoue’s Vagabond.';
+---
+
+<BaseLayout title={title} description={description}>
+  <SiteHeader />
+
+  <main id="main-content">
+    <Hero />
+
+    <section id="introduction" class="introduction">
+      <header class="introduction__header">
+        <p class="introduction__label">Prologue</p>
+        <h2 class="introduction__statement heading-section">
+          Musashi believed strength meant standing above everyone else. His journey taught him that the greatest opponent was himself.
+        </h2>
+      </header>
+
+      <div class="introduction__body">
+        <p class="introduction__lead body-lead">
+          Born as Shinmen Takezō, he survived through anger, instinct, and violence. Every battle moved him closer to becoming invincible, yet further from understanding why he desired strength in the first place.
+        </p>
+
+        <dl class="project-meta">
+          <div class="project-meta__item">
+            <dt>Character</dt>
+            <dd>Miyamoto Musashi</dd>
+          </div>
+          <div class="project-meta__item">
+            <dt>Origin</dt>
+            <dd>Vagabond</dd>
+          </div>
+          <div class="project-meta__item">
+            <dt>Creator</dt>
+            <dd>Takehiko Inoue</dd>
+          </div>
+          <div class="project-meta__item">
+            <dt>Theme</dt>
+            <dd>The meaning of strength</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    {chapters.map((chapter) => <ChapterSection chapter={chapter} />)}
+  </main>
+
+  <SiteFooter />
+</BaseLayout>
+
+<script>
+  import { initializeAnimations } from '~/scripts/initialize-animations';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeAnimations();
+  });
+</script>

@@ -1,0 +1,24 @@
+---
+import type { ChapterMetaItem } from '~/data/chapters';
+import ChapterMetadata from './ChapterMetadata.astro';
+
+interface Props {
+  number: string;
+  eyebrow: string;
+  title: string;
+  meta: ChapterMetaItem[];
+}
+
+const { number, eyebrow, title, meta } = Astro.props;
+---
+
+<header class="chapter__header">
+  <div class="chapter__identity">
+    <p class="chapter__number">{number}</p>
+    <p class="chapter__label">{eyebrow}</p>
+  </div>
+
+  <h2 class="chapter__title heading-chapter">{title}</h2>
+
+  <ChapterMetadata meta={meta} />
+</header>
