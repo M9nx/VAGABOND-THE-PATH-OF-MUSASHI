@@ -5,13 +5,16 @@ import { initHeroAnimations } from './animations/hero';
 import { initChapterHeadingAnimations } from './animations/chapter-headings';
 import { initImageRevealAnimations } from './animations/image-reveals';
 import { initQuoteAnimations } from './animations/quotes';
-import { initNavigation } from './animations/navigation';
+import { initNavigation, initMobileNavigation } from './animations/navigation';
 
 export function initializeAnimations() {
+  // Mobile navigation must work regardless of motion preference.
+  initMobileNavigation();
+
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (prefersReducedMotion) {
-    // Static page is already fully visible; navigation is handled by CSS.
+    // Static page is already fully visible; track active chapter only.
     initNavigation();
     return;
   }
