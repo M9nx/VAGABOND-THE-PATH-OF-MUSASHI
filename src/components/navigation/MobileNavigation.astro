@@ -21,11 +21,13 @@ const navItems = [
       navItems.map((item) => (
         <li>
           <a
+            class="mobile-nav__link"
             href={`#${item.id}`}
             data-mobile-nav-item={item.id}
             aria-current="false"
           >
-            <span>{item.number}</span> {item.label}
+            <span class="mobile-nav__link-number">{item.number}</span>
+            <span class="mobile-nav__link-label">{item.label}</span>
           </a>
         </li>
       ))

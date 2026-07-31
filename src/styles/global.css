@@ -112,8 +112,12 @@ main {
 
 .site-nav {
   display: grid;
-  grid-template-columns: minmax(10rem, 1fr) auto minmax(10rem, 1fr);
+  grid-template-columns:
+    minmax(max-content, 0.8fr)
+    minmax(0, 2.2fr)
+    max-content;
   align-items: center;
+  gap: clamp(1rem, 2vw, 2rem);
   width: min(100%, var(--content-max));
   height: 100%;
   margin-inline: auto;
@@ -125,6 +129,7 @@ main {
   align-items: baseline;
   gap: 0.8rem;
   width: max-content;
+  min-width: 0;
 }
 
 .site-nav__brand-name {
@@ -133,6 +138,7 @@ main {
   font-weight: 800;
   letter-spacing: 0.13em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .site-nav__brand-subtitle {
@@ -140,73 +146,136 @@ main {
   font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-}
-
-.site-nav__chapter {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.site-nav__chapter-number {
-  margin-right: 0.35rem;
+  white-space: nowrap;
 }
 
 .site-nav__links {
   display: flex;
-  justify-self: end;
+  justify-content: center;
   align-items: center;
-  gap: clamp(0.9rem, 1.5vw, 1.8rem);
+  gap: clamp(0.75rem, 1.5vw, 1.5rem);
+  min-width: 0;
+  overflow: visible;
 }
 
-.site-nav__links a {
+.site-nav__links li {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.site-nav__link {
   position: relative;
-  display: block;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 0.5rem;
+  align-items: start;
   padding-block: 0.5rem;
-  color: rgba(255, 255, 255, 0.76);
-  font-size: 0.66rem;
-  font-weight: 600;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
   transition:
     color var(--duration-fast) ease,
     transform var(--duration-fast) var(--ease-out);
 }
 
-.site-nav__links a::after {
+.site-nav__link::before {
   position: absolute;
-  right: 0;
-  bottom: 0.15rem;
+  top: 0.15rem;
   left: 0;
+  width: 1.35rem;
   height: 1px;
   content: "";
-  background: var(--white);
+  background: var(--red);
   transform: scaleX(0);
-  transform-origin: right;
+  transform-origin: left;
   transition: transform 260ms var(--ease-out);
 }
 
-.site-nav__links a:hover,
-.site-nav__links a[aria-current="true"] {
-  color: var(--white);
+.site-nav__link-number {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--red);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
 }
 
-.site-nav__links a:hover::after,
-.site-nav__links a[aria-current="true"]::after {
+.site-nav__link-label {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.site-nav__link:hover,
+.site-nav__link[aria-current="location"],
+.site-nav__link[aria-current="true"] {
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+.site-nav__link:hover::before,
+.site-nav__link[aria-current="location"]::before,
+.site-nav__link[aria-current="true"]::before {
   transform: scaleX(1);
-  transform-origin: left;
+}
+
+.site-nav__status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  min-width: max-content;
+}
+
+.site-nav__chapter {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.site-nav__chapter-number {
+  color: var(--red);
+  font-weight: 800;
+}
+
+.site-nav__chapter-divider {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.site-nav__chapter-name {
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .site-nav__menu-button {
   display: none;
-  justify-self: end;
-  font-size: 0.7rem;
+  flex: 0 0 auto;
+  padding: 0.5rem 0.75rem;
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  transition:
+    border-color var(--duration-fast) ease,
+    background-color var(--duration-fast) ease;
+}
+
+.site-nav__menu-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* ==================================================

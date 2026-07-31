@@ -1,9 +1,9 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getLenis } from '../smooth-scroll';
 
 const sections = [
-  { id: 'home', number: '00', label: 'Prologue' },
-  { id: 'introduction', number: '00', label: 'Prologue' },
+  { id: 'introduction', number: '00', label: 'Introduction' },
   { id: 'chapter-one', number: '01', label: 'The Beast' },
   { id: 'chapter-two', number: '02', label: 'Fear' },
   { id: 'chapter-three', number: '03', label: 'Awareness' },
@@ -12,8 +12,12 @@ const sections = [
   { id: 'chapter-six', number: '06', label: 'The Endless Path' },
 ];
 
+let headerHeight = 76;
+let header: Element | null = null;
+let sectionElements: Map<string, HTMLElement> = new Map();
+
 export function initNavigation() {
-  const header = document.querySelector('.site-header');
+  header = document.querySelector('.site-header');
   const currentNumberEl = document.querySelector('.site-nav__chapter-number');
   const currentNameEl = document.querySelector('.site-nav__chapter-name');
   const navLinks = document.querySelectorAll('[data-nav-item]');
@@ -21,15 +25,21 @@ export function initNavigation() {
 
   gsap.registerPlugin(ScrollTrigger);
 
+  function updateHeaderHeight() {
+    headerHeight = (header?.clientHeight ?? 76) + 16;
+  }
+
   function setActive(id: string) {
     navLinks.forEach((link) => {
       const linkId = link.getAttribute('data-nav-item');
-      link.setAttribute('aria-current', linkId === id ? 'true' : 'false');
+      const isActive = linkId === id;
+      link.setAttribute('aria-current', isActive ? 'location' : 'false');
     });
 
     mobileNavLinks.forEach((link) => {
       const linkId = link.getAttribute('data-mobile-nav-item');
-      link.setAttribute('aria-current', linkId === id ? 'true' : 'false');
+      const isActive = linkId === id;
+      link.setAttribute('aria-current', isActive ? 'location' : 'false');
     });
 
     const section = sections.find((s) => s.id === id);
@@ -39,10 +49,32 @@ export function initNavigation() {
     }
   }
 
-  const headerHeight = (header?.clientHeight ?? 76) + 20;
+  function getSectionElement(id: string) {
+    if (!sectionElements.has(id)) {
+      const el = document.getElementById(id);
+      if (el) sectionElements.set(id, el);
+    }
+    return sectionElements.get(id);
+  }
+
+  function handleHashChange() {
+    const hash = window.location.hash.replace('#', '');
+    if (!hash) {
+      setActive('introduction');
+      return;
+    }
+    const section = sections.find((s) => s.id === hash);
+    if (section) {
+      setActive(hash);
+      scrollToSection(hash, false);
+    }
+  }
+
+  updateHeaderHeight();
+  window.addEventListener('resize', updateHeaderHeight, { passive: true });
 
   sections.forEach(({ id }) => {
-    const el = document.getElementById(id);
+    const el = getSectionElement(id);
     if (!el) return;
 
     ScrollTrigger.create({
@@ -54,24 +86,63 @@ export function initNavigation() {
     });
   });
 
-  // Anchor navigation handling.
+  // Single anchor navigation handler for all internal links.
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (event) => {
       const href = anchor.getAttribute('href');
       if (!href) return;
 
-      const target = document.querySelector(href);
-      if (target instanceof HTMLElement) {
-        event.preventDefault();
-        const offset = (header?.clientHeight ?? 76) + 16;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
+      const targetId = href.replace('#', '');
+      const target = getSectionElement(targetId);
+      if (!target) return;
 
-      // Close mobile menu if open.
+      event.preventDefault();
       closeMobileMenu();
+
+      // Update history and active state immediately.
+      window.history.pushState(null, '', href);
+      setActive(targetId);
+
+      scrollToSection(targetId, true);
     });
   });
+
+  // Handle initial hash and browser back/forward.
+  handleHashChange();
+  window.addEventListener('popstate', handleHashChange);
+
+  return {
+    refresh() {
+      updateHeaderHeight();
+      ScrollTrigger.refresh();
+    },
+  };
+}
+
+export function scrollToSection(id: string, animate = true) {
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  updateHeaderHeight();
+  const top = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+  const lenis = getLenis();
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (lenis && !reducedMotion && animate) {
+    lenis.scrollTo(top, {
+      duration: 1.2,
+      immediate: false,
+    });
+  } else {
+    window.scrollTo({
+      top,
+      behavior: reducedMotion || !animate ? 'auto' : 'smooth',
+    });
+  }
+}
+
+function updateHeaderHeight() {
+  headerHeight = ((header?.clientHeight ?? 76) + 16);
 }
 
 let mobileNavState: {
@@ -155,4 +226,10 @@ export function initMobileNavigation() {
       first.focus();
     }
   });
+}
+
+export function checkNavigationOverflow() {
+  const nav = document.querySelector('.site-nav__links');
+  if (!nav) return false;
+  return nav.scrollWidth > nav.clientWidth;
 }

@@ -1,22 +1,19 @@
 /* ==================================================
-   Large tablet and compact desktop
+   Compact desktop
 ================================================== */
 
-@media (max-width: 1180px) {
+@media (max-width: 1280px) {
   .site-nav {
-    grid-template-columns: minmax(10rem, 1fr) auto;
-  }
-
-  .site-nav__chapter {
-    display: none;
+    grid-template-columns: max-content 1fr max-content;
+    gap: 1.5rem;
   }
 
   .site-nav__links {
-    gap: 0.9rem;
+    display: none;
   }
 
-  .site-nav__links a {
-    font-size: 0.58rem;
+  .site-nav__menu-button {
+    display: block;
   }
 
   .chapter__header {
@@ -56,13 +53,8 @@
     grid-template-columns: 1fr auto;
   }
 
-  .site-nav__brand-subtitle,
-  .site-nav__links {
+  .site-nav__brand-subtitle {
     display: none;
-  }
-
-  .site-nav__menu-button {
-    display: block;
   }
 
   .hero {

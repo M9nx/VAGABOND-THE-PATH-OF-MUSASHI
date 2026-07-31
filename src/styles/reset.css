@@ -9,9 +9,12 @@
 }
 
 html {
-  scroll-behavior: smooth;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+}
+
+html:not([data-smooth-scroll="true"]) {
+  scroll-behavior: smooth;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -93,6 +96,10 @@ table {
 }
 
 :target {
+  scroll-margin-top: calc(var(--header-height) + 1rem);
+}
+
+[id] {
   scroll-margin-top: calc(var(--header-height) + 1rem);
 }
 

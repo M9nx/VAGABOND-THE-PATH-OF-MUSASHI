@@ -1,6 +1,9 @@
 ---
 import ChapterNavigation from './ChapterNavigation.astro';
 import MobileNavigation from './MobileNavigation.astro';
+
+const currentChapterNumber = '00';
+const currentChapterName = 'Introduction';
 ---
 
 <header class="site-header">
@@ -10,22 +13,25 @@ import MobileNavigation from './MobileNavigation.astro';
       <span class="site-nav__brand-subtitle">The Path of Musashi</span>
     </a>
 
-    <p class="site-nav__chapter" id="current-chapter" aria-live="polite" aria-atomic="true">
-      <span class="site-nav__chapter-number">00</span>
-      <span class="site-nav__chapter-name">Prologue</span>
-    </p>
-
     <ChapterNavigation />
 
-    <button
-      class="site-nav__menu-button"
-      type="button"
-      aria-controls="mobile-nav"
-      aria-expanded="false"
-      aria-label="Open chapter navigation"
-    >
-      Menu
-    </button>
+    <div class="site-nav__status">
+      <p class="site-nav__chapter" id="current-chapter" aria-live="polite" aria-atomic="true">
+        <span class="site-nav__chapter-number">{currentChapterNumber}</span>
+        <span class="site-nav__chapter-divider" aria-hidden="true">/</span>
+        <span class="site-nav__chapter-name">{currentChapterName}</span>
+      </p>
+
+      <button
+        class="site-nav__menu-button"
+        type="button"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open chapter navigation"
+      >
+        Menu
+      </button>
+    </div>
   </nav>
 
   <MobileNavigation />

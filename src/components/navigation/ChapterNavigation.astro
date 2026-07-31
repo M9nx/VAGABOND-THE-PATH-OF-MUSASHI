@@ -16,11 +16,13 @@ const navItems = [
     navItems.map((item) => (
       <li>
         <a
+          class="site-nav__link"
           href={`#${item.id}`}
           data-nav-item={item.id}
           aria-current="false"
         >
-          <span>{item.number}</span> {item.label}
+          <span class="site-nav__link-number">{item.number}</span>
+          <span class="site-nav__link-label">{item.label}</span>
         </a>
       </li>
     ))
