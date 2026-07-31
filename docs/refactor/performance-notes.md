@@ -67,8 +67,8 @@
 
 **JavaScript shipped to the browser:**
 - One bundled module: `index.astro_astro_type_script_index_0_lang.*.js`
-- Raw size: ~119.53 KB
-- Gzipped: ~46.81 KB
+- Raw size: ~120.90 KB
+- Gzipped: ~47.21 KB
 - Includes GSAP + ScrollTrigger + navigation logic.
 
 **CSS:** bundled into a single CSS file by Astro.
@@ -119,6 +119,15 @@ No framework hydration, React islands, or unnecessary client-side code are shipp
 - `sizes="(max-width: 640px) 100vw, (max-width: 1200px) 90vw, 100rem"`
 - `widths=[400, 800, 1200, 1600, 2000]`
 - Mobile devices receive smaller variants; desktop receives the full-resolution variant.
+
+## Content corrections
+
+No written content was changed during the migration. The following adjustments were made to preserve the original meaning:
+
+- Replaced the broken external image URL in Chapter 01 with a local asset.
+- Replaced missing `musashi-*.png` references with available local assets.
+- Removed the invalid hero video `poster` directory path and supplied an actual image fallback.
+- Corrected the site navigation `aria-current` and chapter indicator semantics.
 
 ## Notes for future maintenance
 
