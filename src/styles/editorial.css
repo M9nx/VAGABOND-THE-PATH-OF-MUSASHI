@@ -304,37 +304,25 @@
 
 .editorial-image--wide img {
   aspect-ratio: 16 / 9;
-  background: var(--yellow);
-  opacity: 0.9;
-  mix-blend-mode: multiply;
 }
 
 .editorial-image--fullscreen {
   width: calc(100% + (var(--page-gutter) * 2));
   max-width: none;
   margin-inline: calc(var(--page-gutter) * -1);
-  background: var(--yellow);
-  opacity: 0.99;
 }
 
 .editorial-image--fullscreen img {
   height: min(82svh, 58rem);
   object-position: center;
-  opacity: 0.9;
 }
 
 .editorial-image--small img {
   aspect-ratio: 4 / 5;
-  background: var(--yellow);
-  opacity: 0.9;
-  mix-blend-mode: multiply;
 }
 
 .editorial-image--large img {
   aspect-ratio: 16 / 11;
-  background: var(--yellow);
-  opacity: 0.9;
-  mix-blend-mode: multiply;
 }
 
 .editorial-image--portrait img {
@@ -389,9 +377,6 @@
 
 .editorial-gallery--split .editorial-image--small {
   margin-bottom: clamp(2rem, 7vw, 8rem);
-  background: var(--yellow);
-  opacity: 0.9;
-  mix-blend-mode: multiply;
 }
 
 .editorial-gallery--asymmetric {
