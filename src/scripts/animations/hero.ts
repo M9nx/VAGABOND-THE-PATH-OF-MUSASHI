@@ -39,19 +39,22 @@ export function initHeroAnimations() {
       1.3
     );
 
-    // Subtle video scale / parallax on scroll.
+    // Subtle video scale / parallax on scroll, disabled on mobile for performance.
     const video = document.querySelector('.hero__video') as HTMLElement | null;
     if (video) {
-      gsap.to(video, {
-        scale: 1.05,
-        yPercent: 6,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
+      const mm = gsap.matchMedia();
+      mm.add('(min-width: 901px)', () => {
+        gsap.to(video, {
+          scale: 1.05,
+          yPercent: 6,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
       });
     }
 

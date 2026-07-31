@@ -63,17 +63,20 @@ export function initImageRevealAnimations() {
         );
       }
 
-      // Very subtle vertical parallax for selected large images.
+      // Very subtle vertical parallax for selected large images on desktop.
       if (image.classList.contains('editorial-image--fullscreen')) {
-        gsap.to(img, {
-          yPercent: -4,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: image,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-          },
+        const mm = gsap.matchMedia();
+        mm.add('(min-width: 901px)', () => {
+          gsap.to(img, {
+            yPercent: -4,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: image,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          });
         });
       }
     });
