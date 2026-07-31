@@ -5,9 +5,12 @@ export function initImageRevealAnimations() {
     const images = document.querySelectorAll('.editorial-image');
 
     images.forEach((image, index) => {
+      const wrapper = image.querySelector('.editorial-image__wrapper');
       const img = image.querySelector('img');
       const overlay = image.querySelector('.editorial-image__overlay');
       const caption = image.querySelector('.image-caption');
+
+      if (!wrapper) return;
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -18,9 +21,9 @@ export function initImageRevealAnimations() {
         },
       });
 
-      // Mask reveal using clip-path.
+      // Mask reveal using clip-path on the wrapper only so captions stay free.
       tl.fromTo(
-        image,
+        wrapper,
         { clipPath: 'inset(0 100% 0 0)' },
         {
           clipPath: 'inset(0 0% 0 0)',

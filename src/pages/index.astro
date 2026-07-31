@@ -59,7 +59,9 @@ const description = 'A visual editorial tribute to Miyamoto Musashi from Takehik
 <script>
   import { initializeAnimations } from '~/scripts/initialize-animations';
 
-  document.addEventListener('DOMContentLoaded', () => {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAnimations);
+  } else {
     initializeAnimations();
-  });
+  }
 </script>
