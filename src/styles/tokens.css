@@ -1,0 +1,51 @@
+:root {
+  /* ==================================================
+     Color palette
+  ================================================== */
+  --paper: #e8e0d2;
+  --paper-light: #f4efe6;
+  --paper-deep: #d8cebe;
+  --ink: #11110f;
+  --ink-soft: #24231f;
+  --muted: #6f6a61;
+  --muted-light: #afa89d;
+  --red: #8a211c;
+  --red-dark: #5f1613;
+  --white: #fffdf8;
+  --yellow: #d8aa18;
+
+  --line-dark: rgba(17, 17, 15, 0.22);
+  --line-light: rgba(255, 253, 248, 0.28);
+
+  /* ==================================================
+     Typography
+  ================================================== */
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Arial Narrow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-serif: "Iowan Old Style", "Baskerville", "Times New Roman", serif;
+
+  /* ==================================================
+     Spacing and sizing
+  ================================================== */
+  --page-gutter: clamp(1.25rem, 3vw, 3.75rem);
+  --section-space: clamp(6rem, 12vw, 13rem);
+  --content-max: 100rem;
+  --header-height: 4.75rem;
+
+  /* ==================================================
+     Motion
+  ================================================== */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 240ms;
+  --duration-base: 400ms;
+  --duration-slow: 900ms;
+
+  /* ==================================================
+     Z-index layers
+  ================================================== */
+  --z-grain: 50;
+  --z-header: 40;
+  --z-mobile-menu: 45;
+  --z-hero-media: -2;
+  --z-hero-overlay: -1;
+}

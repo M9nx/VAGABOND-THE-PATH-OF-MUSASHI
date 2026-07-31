@@ -1,0 +1,56 @@
+---
+import '~/styles/reset.css';
+import '~/styles/tokens.css';
+import '~/styles/typography.css';
+import '~/styles/global.css';
+import '~/styles/editorial.css';
+import '~/styles/motion.css';
+import '~/styles/responsive.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+}
+
+const {
+  title = 'Vagabond — The Path of Musashi',
+  description = 'A visual editorial tribute to Miyamoto Musashi from Takehiko Inoue\'s Vagabond.',
+  canonicalPath = '/',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content={description}>
+
+    <title>{title}</title>
+
+    <link rel="canonical" href={`https://vagabond-tribute.example.com${canonicalPath}`}>
+
+    <!-- Open Graph placeholders -->
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content={`https://vagabond-tribute.example.com${canonicalPath}`}>
+    <meta property="og:image" content="https://vagabond-tribute.example.com/og-image.jpg">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+
+    <slot name="head" />
+  </head>
+
+  <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <slot />
+
+    <script>
+      document.documentElement.classList.add('js');
+    </script>
+  </body>
+</html>
