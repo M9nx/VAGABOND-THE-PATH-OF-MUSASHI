@@ -116,18 +116,27 @@ let mobileNavState: {
   mobileNav: HTMLElement;
   toggleButton: HTMLElement;
   lastFocusedElement: Element | null;
+  lockedScrollY: number;
 } | null = null;
 
 function closeMobileMenu() {
   if (!mobileNavState) return;
 
-  const { mobileNav, toggleButton, lastFocusedElement } = mobileNavState;
+  const { mobileNav, toggleButton, lastFocusedElement, lockedScrollY } = mobileNavState;
 
   mobileNav.classList.remove('is-open');
   mobileNav.setAttribute('aria-hidden', 'true');
   toggleButton.setAttribute('aria-expanded', 'false');
-  document.body.style.overflow = '';
   document.documentElement.classList.remove('mobile-nav-open');
+  document.body.style.removeProperty('position');
+  document.body.style.removeProperty('top');
+  document.body.style.removeProperty('width');
+  document.body.style.removeProperty('overflow');
+  window.scrollTo(0, lockedScrollY);
+
+  const lenis = getLenis();
+  lenis?.start();
+  ScrollTrigger.refresh();
 
   if (lastFocusedElement instanceof HTMLElement) {
     lastFocusedElement.focus();
@@ -228,17 +237,25 @@ export function initMobileNavigation() {
     mobileNav,
     toggleButton,
     lastFocusedElement: null,
+    lockedScrollY: 0,
   };
 
   function openMenu() {
     if (!mobileNavState) return;
     mobileNavState.lastFocusedElement = document.activeElement;
+    mobileNavState.lockedScrollY = window.scrollY;
+
+    const lenis = getLenis();
+    lenis?.stop();
 
     mobileNavState.mobileNav.classList.add('is-open');
     mobileNavState.mobileNav.setAttribute('aria-hidden', 'false');
     mobileNavState.toggleButton.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
     document.documentElement.classList.add('mobile-nav-open');
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${mobileNavState.lockedScrollY}px`;
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
 
     const firstLink = mobileNavState.mobileNav.querySelector('a');
     if (firstLink instanceof HTMLElement) {
