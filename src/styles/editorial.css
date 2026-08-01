@@ -133,9 +133,9 @@
 .chapter__header {
   display: grid;
   grid-template-columns:
-    minmax(7rem, 0.35fr)
+    minmax(6rem, 0.35fr)
     minmax(0, 1.35fr)
-    minmax(19rem, 0.75fr);
+    minmax(0, 0.75fr);
   gap: clamp(2rem, 5vw, 6rem);
   align-items: start;
   padding-bottom: clamp(4rem, 8vw, 8rem);
@@ -307,9 +307,16 @@
 }
 
 .editorial-image--fullscreen {
-  width: calc(100% + (var(--page-gutter) * 2));
+  width: 100%;
   max-width: none;
-  margin-inline: calc(var(--page-gutter) * -1);
+  margin-inline: 0;
+}
+
+@media (min-width: 901px) {
+  .editorial-image--fullscreen {
+    width: calc(100% + (var(--page-gutter) * 2));
+    margin-inline: calc(var(--page-gutter) * -1);
+  }
 }
 
 .editorial-image--fullscreen img {
@@ -492,9 +499,11 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  max-width: 100%;
+  overflow: hidden;
   color: rgba(255, 255, 255, 0.07);
   font-family: var(--font-serif);
-  font-size: clamp(6rem, 14vw, 14rem);
+  font-size: clamp(4rem, 12vw, 14rem);
   content: "小次郎";
   transform: translate(-50%, -50%) rotate(-6deg);
   white-space: nowrap;
