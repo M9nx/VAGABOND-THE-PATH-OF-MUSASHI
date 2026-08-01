@@ -37,49 +37,54 @@ body {
 
 .heading-hero {
   font-family: var(--font-display);
-  font-size: clamp(4.6rem, 12vw, 14.5rem);
+  font-size: clamp(3.6rem, 11.5vw, 14.5rem);
   font-stretch: condensed;
   font-weight: 900;
-  line-height: 0.75;
+  line-height: 0.78;
   letter-spacing: -0.075em;
   text-transform: uppercase;
   text-wrap: balance;
-  max-width: 100%;
+  max-inline-size: min(10ch, 100%);
+  overflow-wrap: anywhere;
 }
 
 .heading-chapter {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 6.2vw, 7.5rem);
+  font-size: clamp(2.4rem, 6vw, 7.5rem);
   font-weight: 800;
-  line-height: 0.9;
+  line-height: 0.92;
   letter-spacing: -0.06em;
   text-wrap: balance;
+  max-inline-size: min(14ch, 100%);
 }
 
 .heading-section {
   font-family: var(--font-display);
-  font-size: clamp(2.8rem, 6vw, 7.3rem);
+  font-size: clamp(2.2rem, 5.8vw, 7.3rem);
   font-weight: 800;
-  line-height: 0.96;
+  line-height: 0.98;
   letter-spacing: -0.055em;
   text-wrap: balance;
+  max-inline-size: min(18ch, 100%);
 }
 
 .heading-quote {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 7vw, 8.5rem);
+  font-size: clamp(2.2rem, 6.4vw, 8.5rem);
   font-weight: 800;
-  line-height: 0.95;
+  line-height: 0.98;
   letter-spacing: -0.055em;
   text-wrap: balance;
+  max-inline-size: min(16ch, 100%);
 }
 
 .heading-comparison {
   font-family: var(--font-display);
-  font-size: clamp(2.8rem, 5vw, 6rem);
+  font-size: clamp(2.2rem, 4.8vw, 6rem);
   font-weight: 800;
-  line-height: 0.94;
+  line-height: 0.96;
   letter-spacing: -0.055em;
+  max-inline-size: min(12ch, 100%);
 }
 
 .body-large {

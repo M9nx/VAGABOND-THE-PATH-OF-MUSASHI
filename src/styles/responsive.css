@@ -1,19 +1,23 @@
 /* ==================================================
-   Compact desktop
-   Breakpoint chosen from browser overflow checks:
-   full chapter row needs ~1360px+ once the brand subtitle is present,
-   and still overflows around 1280–1320 with subtitle hidden.
-   Compact mode therefore starts at 1360px.
+   Responsive strategy
+
+   Base (mobile-first defaults live in editorial/global)
+   Small tablet+: 640px
+   Tablet+: 768px / 900px editorial collapses
+   Compact nav: max-width 1360px (preserve stabilized nav)
+   Desktop links: 1361px+
+   Large desktop subtitle: 1601px+
 ================================================== */
 
+/* ---- Large desktop brand subtitle ---- */
 @media (max-width: 1600px) {
   .site-nav__brand-subtitle {
     display: none;
   }
 }
 
+/* ---- Compact navigation (do not regress) ---- */
 @media (max-width: 1360px) {
-  /* Links are display:none, so only brand + status participate in the grid. */
   .site-nav {
     grid-template-columns: 1fr auto;
     column-gap: 1.25rem;
@@ -30,38 +34,69 @@
   .site-nav__menu-button {
     display: block;
   }
+}
+
+/* ---- Soften mid-width editorial grids before full mobile ---- */
+@media (max-width: 1100px) {
+  .introduction__body {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
 
   .chapter__header {
-    grid-template-columns: minmax(7rem, 0.35fr) minmax(0, 1fr);
+    grid-template-columns: minmax(6rem, 0.3fr) minmax(0, 1fr);
+    gap: 1.75rem 2rem;
   }
 
   .chapter-meta {
-    grid-column: 2;
-    margin-top: 1rem;
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
   }
 
   .chapter__narrative--offset {
-    grid-template-columns: minmax(7rem, 0.35fr) repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .chapter__narrative--offset p:first-child {
-    grid-column: 2;
+  .chapter__narrative--offset p:first-child,
+  .chapter__narrative--offset p:last-child {
+    grid-column: auto;
   }
 
   .chapter__narrative--offset p:last-child {
-    grid-column: 3;
+    margin-top: clamp(2rem, 6vw, 4rem);
+  }
+
+  .editorial-gallery--split,
+  .editorial-gallery--asymmetric {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .editorial-gallery--asymmetric .editorial-image--portrait {
+    margin-top: clamp(2rem, 6vw, 5rem);
+  }
+
+  .editorial-gallery--split .editorial-image--small {
+    margin-bottom: clamp(1rem, 4vw, 3rem);
+  }
+
+  .site-footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .site-footer__brand {
+    grid-column: 1 / -1;
   }
 }
 
-
 /* ==================================================
-   Tablet
+   Tablet / narrow desktop editorial
 ================================================== */
 
 @media (max-width: 900px) {
   :root {
     --page-gutter: clamp(1rem, 4vw, 2rem);
-    --section-space: clamp(5rem, 13vw, 8rem);
+    --section-space: clamp(4.5rem, 12vw, 8rem);
   }
 
   .site-nav__brand-subtitle {
@@ -69,7 +104,11 @@
   }
 
   .hero {
-    min-height: 92svh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    padding-block:
+      calc(var(--header-height) + clamp(1.5rem, 5vh, 3.5rem))
+      clamp(1.5rem, 4vh, 3rem);
   }
 
   .hero__video {
@@ -91,26 +130,30 @@
       );
   }
 
+  .hero__kanji {
+    display: none;
+  }
+
   .introduction__header,
   .introduction__body {
     grid-template-columns: 1fr;
   }
 
   .introduction__header {
-    gap: 2rem;
+    gap: 1.75rem;
   }
 
   .introduction__statement {
-    max-width: 18ch;
+    max-inline-size: min(18ch, 100%);
   }
 
   .introduction__lead {
-    max-width: 34ch;
+    max-inline-size: min(34ch, 100%);
   }
 
   .chapter__header {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.75rem;
   }
 
   .chapter__identity {
@@ -121,7 +164,7 @@
   }
 
   .chapter__title {
-    max-width: 16ch;
+    max-inline-size: min(16ch, 100%);
   }
 
   .chapter-meta {
@@ -132,6 +175,7 @@
   .chapter__narrative--offset,
   .chapter__narrative--columns {
     grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
   }
 
   .chapter__narrative--offset p:first-child,
@@ -140,11 +184,25 @@
   }
 
   .chapter__narrative--offset p:last-child {
-    margin-top: clamp(3rem, 8vw, 6rem);
+    margin-top: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  .editorial-image--fullscreen {
+    width: 100%;
+    margin-inline: 0;
   }
 
   .editorial-image--fullscreen img {
     height: min(70svh, 44rem);
+  }
+
+  .image-caption {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 0.75rem 1rem;
+  }
+
+  .image-caption__description {
+    grid-column: 2;
   }
 
   .editorial-gallery--split,
@@ -175,7 +233,6 @@
   }
 }
 
-
 /* ==================================================
    Mobile
 ================================================== */
@@ -189,8 +246,19 @@
     background: rgba(12, 12, 11, 0.9);
   }
 
+  .site-nav__chapter-name {
+    max-width: 7.5rem;
+  }
+
+  .mobile-nav {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+  }
+
   .hero {
-    padding-top: calc(var(--header-height) + 2.5rem);
+    min-height: 100svh;
+    min-height: 100dvh;
   }
 
   .hero__video {
@@ -198,8 +266,7 @@
   }
 
   .hero__title {
-    font-size: clamp(4.25rem, 23vw, 7.4rem);
-    line-height: 0.78;
+    max-inline-size: 100%;
   }
 
   .hero__subtitle {
@@ -209,7 +276,7 @@
 
   .hero__question {
     max-width: 17rem;
-    font-size: 1.45rem;
+    font-size: clamp(1.2rem, 5.5vw, 1.45rem);
   }
 
   .hero__footer {
@@ -226,11 +293,11 @@
   }
 
   .introduction__statement {
-    font-size: clamp(2.75rem, 12vw, 4.6rem);
+    max-inline-size: min(16ch, 100%);
   }
 
   .introduction__lead {
-    font-size: clamp(1.55rem, 7vw, 2.4rem);
+    max-inline-size: min(28ch, 100%);
   }
 
   .project-meta,
@@ -255,7 +322,7 @@
   }
 
   .chapter__number {
-    font-size: 3.2rem;
+    font-size: clamp(2.6rem, 14vw, 3.2rem);
   }
 
   .chapter__label {
@@ -264,18 +331,14 @@
   }
 
   .chapter__title {
-    font-size: clamp(3rem, 13vw, 5rem);
-  }
-
-  .chapter__narrative {
-    font-size: clamp(1.35rem, 6vw, 1.85rem);
+    max-inline-size: min(14ch, 100%);
   }
 
   .chapter__narrative--offset,
   .chapter__narrative--columns {
     grid-template-columns: 1fr;
     gap: 2rem;
-    padding-block: 4rem;
+    padding-block: 3.5rem;
   }
 
   .chapter__narrative--offset p:last-child {
@@ -293,23 +356,18 @@
   }
 
   .image-caption {
-    grid-template-columns: 2.3rem 1fr;
-    gap: 0.75rem;
-  }
-
-  .image-caption__description {
-    grid-column: 2;
+    grid-template-columns: 2.3rem minmax(0, 1fr);
   }
 
   .editorial-gallery--split,
   .editorial-gallery--asymmetric {
     grid-template-columns: 1fr;
-    gap: 4rem;
+    gap: 3.5rem;
   }
 
   .editorial-gallery--split .editorial-image--small,
   .editorial-gallery--asymmetric .editorial-image--portrait {
-    width: 78%;
+    width: min(78%, 22rem);
     margin: 0;
   }
 
@@ -322,11 +380,12 @@
   }
 
   .editorial-quote {
-    margin-top: 5rem;
+    margin-top: 4.5rem;
   }
 
-  .editorial-quote p {
-    font-size: clamp(2.9rem, 13vw, 5rem);
+  .editorial-quote p,
+  .editorial-quote--wide p {
+    max-inline-size: min(14ch, 100%);
   }
 
   .comparison {
@@ -335,17 +394,21 @@
   }
 
   .comparison__side {
-    padding: 3rem 0;
+    padding: 2.5rem 0;
     border-right: 0 !important;
     border-bottom: 1px solid var(--section-line);
   }
 
   .comparison__title {
-    font-size: clamp(2.7rem, 12vw, 4.5rem);
+    max-inline-size: min(12ch, 100%);
   }
 
   .comparison__placeholder {
-    min-height: 26rem;
+    min-height: 22rem;
+  }
+
+  .comparison__placeholder::before {
+    font-size: clamp(4rem, 28vw, 8rem);
   }
 
   .belief-comparison {
@@ -354,17 +417,18 @@
   }
 
   .belief-comparison__column {
-    padding: 3rem 0;
+    padding: 2.5rem 0;
     border-right: 0 !important;
     border-bottom: 1px solid var(--section-line);
   }
 
   .belief-comparison__column dl > div {
-    grid-template-columns: 7rem 1fr;
+    grid-template-columns: minmax(6rem, 7rem) minmax(0, 1fr);
   }
 
   .ending-statement p {
-    font-size: clamp(3.4rem, 15vw, 6rem);
+    max-inline-size: min(12ch, 100%);
+    font-size: clamp(2.8rem, 13vw, 5.5rem);
   }
 
   .site-footer__top {
@@ -378,9 +442,9 @@
   .site-footer__bottom {
     flex-direction: column;
     gap: 1rem;
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
   }
 }
-
 
 /* ==================================================
    Very small mobile
@@ -392,6 +456,10 @@
     flex-direction: column;
   }
 
+  .site-nav__chapter-name {
+    max-width: 5.5rem;
+  }
+
   .project-meta dd,
   .chapter-meta dd {
     font-size: 0.88rem;
@@ -400,5 +468,42 @@
   .belief-comparison__column dl > div {
     grid-template-columns: 1fr;
     gap: 0.4rem;
+  }
+
+  .ending-statement p {
+    font-size: clamp(2.4rem, 12vw, 3.6rem);
+  }
+}
+
+/* ==================================================
+   Landscape mobile / short viewports
+================================================== */
+
+@media (max-height: 480px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding-block: calc(var(--header-height) + 1rem) 1.25rem;
+  }
+
+  .hero__subtitle {
+    margin-top: 1rem;
+  }
+
+  .hero__question {
+    margin-top: 0.75rem;
+  }
+
+  .mobile-nav {
+    overflow-y: auto;
+  }
+
+  .editorial-image--fullscreen img {
+    height: min(85svh, 28rem);
+  }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .hero__kanji {
+    display: none;
   }
 }
