@@ -33,7 +33,7 @@
 
 .introduction__body {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(21rem, 0.75fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(min(21rem, 100%), 0.75fr);
   gap: clamp(3rem, 8vw, 9rem);
   padding-top: clamp(3rem, 6vw, 6rem);
 }
