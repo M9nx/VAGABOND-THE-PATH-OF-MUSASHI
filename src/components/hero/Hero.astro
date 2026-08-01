@@ -107,7 +107,8 @@ import ScrollIndicator from './ScrollIndicator.astro';
   }
 
   .hero__title {
-    max-width: 10ch;
+    max-width: min(10ch, 100%);
+    overflow-wrap: anywhere;
   }
 
   .hero__subtitle {
@@ -133,6 +134,7 @@ import ScrollIndicator from './ScrollIndicator.astro';
     position: absolute;
     right: var(--page-gutter);
     bottom: calc(var(--page-gutter) + var(--header-height));
+    max-height: 70%;
     color: rgba(255, 255, 255, 0.06);
     font-size: clamp(6rem, 18vw, 18rem);
     font-weight: 900;
