@@ -2,38 +2,41 @@ import { gsap } from 'gsap';
 
 export function initQuoteAnimations() {
   const ctx = gsap.context(() => {
-    const quotes = document.querySelectorAll('.editorial-quote, .ending-statement');
+    const mm = gsap.matchMedia();
 
-    quotes.forEach((quote) => {
-      const text = quote.querySelector('p');
-      if (!text) return;
+    mm.add(
+      {
+        isMobile: '(max-width: 640px), (pointer: coarse)',
+        isReduced: '(prefers-reduced-motion: reduce)',
+      },
+      (context) => {
+        const { isMobile, isReduced } = context.conditions ?? {};
+        if (isReduced) return;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: quote,
-          start: 'top 80%',
-          end: 'top 55%',
-          toggleActions: 'play none none reverse',
-        },
-      });
+        const quotes = document.querySelectorAll('.editorial-quote, .ending-statement');
 
-      tl.fromTo(
-        text,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }
-      );
+        quotes.forEach((quote) => {
+          const text = quote.querySelector('p');
+          if (!text) return;
 
-      // If we can detect line wrappers, reveal them with a stagger.
-      const wrappedLines = quote.querySelectorAll('.quote-line');
-      if (wrappedLines.length > 0) {
-        tl.fromTo(
-          wrappedLines,
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out' },
-          0
-        );
+          gsap.fromTo(
+            text,
+            { opacity: 0, y: isMobile ? 14 : 30 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: isMobile ? 0.7 : 0.9,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: quote,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          );
+        });
       }
-    });
+    );
   });
 
   return ctx;
