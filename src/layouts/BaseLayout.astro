@@ -6,6 +6,7 @@ import '~/styles/global.css';
 import '~/styles/editorial.css';
 import '~/styles/motion.css';
 import '~/styles/responsive.css';
+import { getBaseUrl, withBase } from '~/utils/base-url';
 
 export interface Props {
   title?: string;
@@ -20,10 +21,11 @@ const {
 } = Astro.props;
 
 const siteOrigin = Astro.site ?? new URL('https://M9nx.github.io');
-const base = import.meta.env.BASE_URL;
-const normalizedPath = canonicalPath.startsWith('/') ? canonicalPath.slice(1) : canonicalPath;
-const canonicalUrl = new URL(`${base}${normalizedPath}`.replace(/\/{2,}/g, '/'), siteOrigin);
-const ogImageUrl = new URL(`${base}og-image.jpg`.replace(/\/{2,}/g, '/'), siteOrigin);
+const base = getBaseUrl();
+const normalizedPath = canonicalPath.replace(/^\/+/, '');
+const canonicalUrl = new URL(`${base}${normalizedPath}`, siteOrigin);
+const ogImageUrl = new URL(withBase('og-image.jpg'), siteOrigin);
+const faviconHref = withBase('favicon.svg');
 ---
 
 <!DOCTYPE html>
@@ -36,7 +38,7 @@ const ogImageUrl = new URL(`${base}og-image.jpg`.replace(/\/{2,}/g, '/'), siteOr
     <title>{title}</title>
 
     <link rel="canonical" href={canonicalUrl.href}>
-    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`}>
+    <link rel="icon" type="image/svg+xml" href={faviconHref}>
 
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>

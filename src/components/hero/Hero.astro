@@ -1,8 +1,7 @@
 ---
 import posterImage from '~/assets/images/beast/portrait.png';
 import ScrollIndicator from './ScrollIndicator.astro';
-
-const videoBase = import.meta.env.BASE_URL;
+import { withBase } from '~/utils/base-url';
 ---
 
 <section id="home" class="hero" aria-label="Prologue">
@@ -16,8 +15,8 @@ const videoBase = import.meta.env.BASE_URL;
       preload="metadata"
       poster={posterImage.src}
     >
-      <source src={`${videoBase}videos/musashi-hero.webm`} type="video/webm">
-      <source src={`${videoBase}videos/musashi-hero.mp4`} type="video/mp4">
+      <source src={withBase('videos/musashi-hero.webm')} type="video/webm">
+      <source src={withBase('videos/musashi-hero.mp4')} type="video/mp4">
     </video>
 
     <div class="hero__overlay"></div>
