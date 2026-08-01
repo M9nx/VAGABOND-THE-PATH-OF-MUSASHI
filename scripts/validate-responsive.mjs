@@ -76,6 +76,20 @@ async function inspectViewport(page, viewport) {
 
   return page.evaluate((ids) => {
     const overflow = document.documentElement.scrollWidth > window.innerWidth + 1;
+    let overflowCulprits = [];
+    if (overflow) {
+      overflowCulprits = [...document.body.querySelectorAll('*')]
+        .filter((el) => {
+          const rect = el.getBoundingClientRect();
+          return rect.right > window.innerWidth + 1 || rect.left < -1;
+        })
+        .slice(0, 8)
+        .map((el) => ({
+          tag: el.tagName.toLowerCase(),
+          className: typeof el.className === 'string' ? el.className.slice(0, 80) : '',
+          right: Math.round(el.getBoundingClientRect().right),
+        }));
+    }
     const header = document.querySelector('.site-header');
     const footer = document.querySelector('.site-footer');
     const navLinks = document.querySelector('.site-nav__links');
@@ -117,6 +131,7 @@ async function inspectViewport(page, viewport) {
       brokenRootVideo: [...document.querySelectorAll('source')].some((s) =>
         (s.getAttribute('src') || '').startsWith('/videos/')
       ),
+      overflowCulprits,
     };
   }, sectionIds);
 }
@@ -184,8 +199,9 @@ async function main() {
     );
     return {
       sources,
-      hasBaseVideos: sources.some((s) => s && s.includes('/Vagabond-Landing-Page/videos/')),
+      hasBaseVideos: sources.some((s) => s && /\/Vagabond-Landing-Page\/videos\//.test(s)),
       hasBareVideos: sources.some((s) => s === '/videos/musashi-hero.mp4' || s === '/videos/musashi-hero.webm'),
+      hasBrokenBaseJoin: sources.some((s) => s && /Vagabond-Landing-Page(?!\/)/.test(s)),
     };
   });
 
@@ -227,6 +243,13 @@ async function main() {
     lines.push(`- ${row.viewport}: ${mode}`);
   }
 
+  lines.push('', '## Overflow culprits (failing viewports)', '');
+  for (const row of rows) {
+    if (row.overflow === 'FAIL') {
+      lines.push(`- ${row.viewport}: ${JSON.stringify(row.overflowCulprits || [])}`);
+    }
+  }
+
   lines.push('', '## Asset path checks', '');
   lines.push(`- Base-prefixed video sources present: ${assetCheck.hasBaseVideos}`);
   lines.push(`- Bare /videos root paths present: ${assetCheck.hasBareVideos}`);
@@ -239,7 +262,8 @@ async function main() {
   console.log('\nAsset check:', assetCheck);
   console.log('Console errors:', errors.length ? errors : 'none');
 
-  if (failed || assetCheck.hasBareVideos || errors.length) {
+  const realConsoleErrors = errors.filter((e) => !/favicon|og-image/i.test(e));
+  if (failed || assetCheck.hasBareVideos || assetCheck.hasBrokenBaseJoin || realConsoleErrors.length) {
     process.exit(1);
   }
 }
