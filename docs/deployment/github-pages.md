@@ -2,7 +2,7 @@
 
 ## Production URL
 
-https://M9nx.github.io/Vagabond-Landing-Page/
+https://M9nx.github.io/VAGABOND-THE-PATH-OF-MUSASHI/
 
 ## Repository type
 
@@ -11,10 +11,10 @@ Project Pages site (not `username.github.io`).
 | Item | Value |
 |------|-------|
 | GitHub user | `M9nx` |
-| Repository | `Vagabond-Landing-Page` |
+| Repository | `VAGABOND-THE-PATH-OF-MUSASHI` |
 | Default branch | `main` |
 | Astro `site` | `https://M9nx.github.io` |
-| Astro `base` | `/Vagabond-Landing-Page` |
+| Astro `base` | `/VAGABOND-THE-PATH-OF-MUSASHI` |
 | Workflow | `.github/workflows/deploy-pages.yml` |
 
 ## How deployment works
@@ -35,12 +35,12 @@ Do not use the older “Deploy from a branch” / `gh-pages` branch flow.
 
 Public assets must respect Astro’s `base`:
 
-- Correct: `/Vagabond-Landing-Page/videos/musashi-hero.mp4`
+- Correct: `/VAGABOND-THE-PATH-OF-MUSASHI/videos/musashi-hero.mp4`
 - Incorrect: `/videos/musashi-hero.mp4` (404 on project Pages)
 
-In components, use `import.meta.env.BASE_URL` (includes trailing slash). Hash-only links such as `#chapter-three` stay unprefixed.
+In components, use `import.meta.env.BASE_URL` / `withBase()` (includes trailing slash). Hash-only links such as `#chapter-three` stay unprefixed.
 
-Local development continues to work; Astro serves the site under the configured base locally as well (`/Vagabond-Landing-Page/`).
+Local development continues to work; Astro serves the site under the configured base locally as well (`/VAGABOND-THE-PATH-OF-MUSASHI/`).
 
 ## Inspecting failed deployments
 
@@ -57,7 +57,7 @@ Actions → **Deploy Astro to GitHub Pages** → **Run workflow**.
 
 1. Add a `CNAME` file under `public/` with the domain name, or configure DNS + Pages custom domain in Settings.
 2. Keep `site` in `astro.config.mjs` aligned with the final origin.
-3. For a root custom domain, `base` may become `/`; for a path-based project site, keep `/Vagabond-Landing-Page`.
+3. For a root custom domain, `base` may become `/`; for a path-based project site, keep `/VAGABOND-THE-PATH-OF-MUSASHI`.
 
 ## Rollback
 
@@ -73,4 +73,4 @@ npm run build
 npm run preview
 ```
 
-Open the printed local URL including the `/Vagabond-Landing-Page/` base path.
+Open the printed local URL including the `/VAGABOND-THE-PATH-OF-MUSASHI/` base path.

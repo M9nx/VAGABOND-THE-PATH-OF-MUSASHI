@@ -4,7 +4,7 @@ import { mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 
 const PORT = 4335;
-const BASE_PATH = '/Vagabond-Landing-Page';
+const BASE_PATH = '/VAGABOND-THE-PATH-OF-MUSASHI';
 const BASE_URL = `http://127.0.0.1:${PORT}${BASE_PATH}/`;
 const SCREENSHOT_DIR = join(process.cwd(), 'docs', 'refactor', 'screenshots', 'final');
 const MATRIX_PATH = join(process.cwd(), 'docs', 'refactor', 'responsive-validation.md');
@@ -202,9 +202,9 @@ async function main() {
     );
     return {
       sources,
-      hasBaseVideos: sources.some((s) => s && /\/Vagabond-Landing-Page\/videos\//.test(s)),
+      hasBaseVideos: sources.some((s) => s && /\/VAGABOND-THE-PATH-OF-MUSASHI\/videos\//.test(s)),
       hasBareVideos: sources.some((s) => s === '/videos/musashi-hero.mp4' || s === '/videos/musashi-hero.webm'),
-      hasBrokenBaseJoin: sources.some((s) => s && /Vagabond-Landing-Page(?!\/)/.test(s)),
+      hasBrokenBaseJoin: sources.some((s) => s && /VAGABOND-THE-PATH-OF-MUSASHI(?!\/)/.test(s)),
     };
   });
 

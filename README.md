@@ -4,7 +4,7 @@ A cinematic, editorial landing-page tribute to Miyamoto Musashi from Takehiko In
 
 Built with **Astro**, **TypeScript**, plain CSS, **GSAP** + **ScrollTrigger**, and **Lenis**.
 
-**Live site:** https://M9nx.github.io/Vagabond-Landing-Page/
+**Live site:** https://M9nx.github.io/VAGABOND-THE-PATH-OF-MUSASHI/
 
 ---
 
@@ -15,7 +15,7 @@ npm install
 npm run dev
 ```
 
-Open the local URL Astro prints. With the GitHub Pages `base` configured, the app is served under `/Vagabond-Landing-Page/`.
+Open the local URL Astro prints. With the GitHub Pages `base` configured, the app is served under `/VAGABOND-THE-PATH-OF-MUSASHI/`.
 
 ## Validation
 
