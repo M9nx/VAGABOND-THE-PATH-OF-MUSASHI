@@ -237,14 +237,15 @@ main {
   align-items: center;
   justify-content: flex-end;
   gap: 0.85rem;
-  min-width: max-content;
+  min-width: 0;
+  max-width: 100%;
 }
 
-/* Desktop: active nav link is the only current-chapter signal. */
 .site-nav__chapter {
   display: none;
   align-items: baseline;
   gap: 0.35rem;
+  min-width: 0;
   color: rgba(255, 255, 255, 0.72);
   font-size: clamp(0.58rem, 0.52rem + 0.14vw, 0.68rem);
   font-weight: 600;
