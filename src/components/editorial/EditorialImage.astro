@@ -20,6 +20,18 @@ const {
 } = Astro.props;
 
 const overlayClass = overlay ? `editorial-image__overlay editorial-image__overlay--${overlay}` : '';
+
+const sizesByVariant: Record<string, string> = {
+  fullscreen: '100vw',
+  wide: '(max-width: 640px) 100vw, (max-width: 1200px) 92vw, min(100vw, 100rem)',
+  large: '(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 62vw',
+  small: '(max-width: 640px) 78vw, (max-width: 1024px) 42vw, 28vw',
+  portrait: '(max-width: 640px) 78vw, (max-width: 1024px) 40vw, 30vw',
+  landscape: '(max-width: 640px) 100vw, (max-width: 1024px) 55vw, 42vw',
+  square: '(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 28vw',
+};
+
+const sizes = sizesByVariant[variant] ?? '(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 70vw';
 ---
 
 <figure class={`editorial-image editorial-image--${variant}`} data-section={section}>
@@ -28,7 +40,7 @@ const overlayClass = overlay ? `editorial-image__overlay editorial-image__overla
       src={src}
       alt={alt}
       widths={[400, 800, 1200, 1600, 2000]}
-      sizes="(max-width: 640px) 100vw, (max-width: 1200px) 90vw, 100rem"
+      sizes={sizes}
       style={objectPosition ? `object-position: ${objectPosition};` : undefined}
       loading={variant === 'wide' || variant === 'fullscreen' ? 'eager' : 'lazy'}
       decoding="async"
