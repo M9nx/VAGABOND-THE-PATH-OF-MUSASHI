@@ -18,6 +18,12 @@ const {
   description = 'A visual editorial tribute to Miyamoto Musashi from Takehiko Inoue\'s Vagabond.',
   canonicalPath = '/',
 } = Astro.props;
+
+const siteOrigin = Astro.site ?? new URL('https://M9nx.github.io');
+const base = import.meta.env.BASE_URL;
+const normalizedPath = canonicalPath.startsWith('/') ? canonicalPath.slice(1) : canonicalPath;
+const canonicalUrl = new URL(`${base}${normalizedPath}`.replace(/\/{2,}/g, '/'), siteOrigin);
+const ogImageUrl = new URL(`${base}og-image.jpg`.replace(/\/{2,}/g, '/'), siteOrigin);
 ---
 
 <!DOCTYPE html>
@@ -29,14 +35,15 @@ const {
 
     <title>{title}</title>
 
-    <link rel="canonical" href={`https://vagabond-tribute.example.com${canonicalPath}`}>
+    <link rel="canonical" href={canonicalUrl.href}>
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`}>
 
-    <!-- Open Graph placeholders -->
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>
     <meta property="og:type" content="website">
-    <meta property="og:url" content={`https://vagabond-tribute.example.com${canonicalPath}`}>
-    <meta property="og:image" content="https://vagabond-tribute.example.com/og-image.jpg">
+    <meta property="og:url" content={canonicalUrl.href}>
+    <meta property="og:image" content={ogImageUrl.href}>
+    <meta name="theme-color" content="#11110f">
 
     <slot name="head" />
   </head>
