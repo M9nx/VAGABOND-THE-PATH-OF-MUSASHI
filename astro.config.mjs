@@ -1,8 +1,10 @@
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
+// Project Pages site:
+// https://M9nx.github.io/Vagabond-Landing-Page/
 export default defineConfig({
-  site: 'https://vagabond-tribute.example.com',
+  site: 'https://M9nx.github.io',
+  base: '/Vagabond-Landing-Page',
   output: 'static',
   compressHTML: true,
   build: {
