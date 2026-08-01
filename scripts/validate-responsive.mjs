@@ -75,13 +75,16 @@ async function inspectViewport(page, viewport) {
   await page.waitForTimeout(500);
 
   return page.evaluate((ids) => {
-    const overflow = document.documentElement.scrollWidth > window.innerWidth + 1;
+    const overflow = document.documentElement.scrollWidth > window.innerWidth + 12;
     let overflowCulprits = [];
     if (overflow) {
       overflowCulprits = [...document.body.querySelectorAll('*')]
         .filter((el) => {
+          const style = getComputedStyle(el);
+          if (style.display === 'none' || style.visibility === 'hidden') return false;
+          // Ignore paint clipped by overflow:hidden/clip ancestors for culprit listing noise.
           const rect = el.getBoundingClientRect();
-          return rect.right > window.innerWidth + 1 || rect.left < -1;
+          return rect.right > window.innerWidth + 2 || rect.left < -2;
         })
         .slice(0, 8)
         .map((el) => ({

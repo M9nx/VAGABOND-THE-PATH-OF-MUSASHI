@@ -3,10 +3,12 @@
 ================================================== */
 
 html {
+  overflow-x: clip;
   background: var(--paper);
 }
 
 body {
+  overflow-x: clip;
   color: var(--ink);
   background:
     radial-gradient(
@@ -394,13 +396,15 @@ main {
 .site-footer__logo {
   display: block;
   width: max-content;
+  max-width: 100%;
   margin-bottom: 2rem;
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 7vw, 8rem);
+  font-size: clamp(2.5rem, 12vw, 8rem);
   font-weight: 900;
   line-height: 0.8;
   letter-spacing: -0.07em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .site-footer__brand p {

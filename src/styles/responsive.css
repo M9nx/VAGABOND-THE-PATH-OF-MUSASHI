@@ -187,7 +187,8 @@
     margin-top: clamp(2.5rem, 7vw, 5rem);
   }
 
-  .editorial-image--fullscreen {
+  .editorial-image--fullscreen,
+  .chapter > .editorial-image.editorial-image--fullscreen {
     width: 100%;
     margin-inline: 0;
   }

@@ -37,17 +37,22 @@ export function initImageRevealAnimations() {
           });
 
           if (isMobile) {
-            tl.fromTo(wrapper, { opacity: 0, y: distance }, { opacity: 1, y: 0, duration, ease: 'power2.out' }, 0);
+            tl.fromTo(wrapper, { opacity: 0, y: distance }, { opacity: 1, y: 0, duration, ease: 'power2.out', immediateRender: false }, 0);
           } else {
             tl.fromTo(
               wrapper,
               { clipPath: 'inset(0 100% 0 0)' },
-              { clipPath: 'inset(0 0% 0 0)', duration, ease: 'power3.inOut' },
+              { clipPath: 'inset(0 0% 0 0)', duration, ease: 'power3.inOut', immediateRender: false },
               0
             );
 
             if (img) {
-              tl.fromTo(img, { scale: isTablet ? 1.03 : 1.06 }, { scale: 1, duration: duration + 0.2, ease: 'power3.out' }, 0);
+              tl.fromTo(
+                img,
+                { scale: isTablet ? 1.03 : 1.06 },
+                { scale: 1, duration: duration + 0.2, ease: 'power3.out', immediateRender: false },
+                0
+              );
             }
           }
 

@@ -94,6 +94,7 @@
   --section-line: var(--line-dark);
 
   position: relative;
+  overflow-x: clip;
   padding:
     var(--section-space)
     var(--page-gutter);
@@ -105,6 +106,25 @@
 .chapter > * {
   width: min(100%, var(--content-max));
   margin-inline: auto;
+}
+
+.chapter > .editorial-image.editorial-image--fullscreen {
+  width: calc(100% + (var(--page-gutter) * 2));
+  max-width: none;
+  margin-inline: calc(var(--page-gutter) * -1);
+}
+
+.editorial-image,
+.editorial-image__wrapper,
+.editorial-image img {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.chapter > .editorial-image.editorial-image--fullscreen,
+.chapter > .editorial-image.editorial-image--fullscreen .editorial-image__wrapper,
+.chapter > .editorial-image.editorial-image--fullscreen img {
+  max-width: none;
 }
 
 .chapter--fear,
@@ -262,8 +282,9 @@
 
 .editorial-image__wrapper {
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   isolation: isolate;
+  contain: paint;
   width: 100%;
   height: 100%;
 }
@@ -304,19 +325,6 @@
 
 .editorial-image--wide img {
   aspect-ratio: 16 / 9;
-}
-
-.editorial-image--fullscreen {
-  width: 100%;
-  max-width: none;
-  margin-inline: 0;
-}
-
-@media (min-width: 901px) {
-  .editorial-image--fullscreen {
-    width: calc(100% + (var(--page-gutter) * 2));
-    margin-inline: calc(var(--page-gutter) * -1);
-  }
 }
 
 .editorial-image--fullscreen img {
