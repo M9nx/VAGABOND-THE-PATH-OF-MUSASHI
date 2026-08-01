@@ -3,151 +3,118 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getLenis } from '../smooth-scroll';
 
 const sections = [
-  { id: 'introduction', number: '00', label: 'Introduction' },
-  { id: 'chapter-one', number: '01', label: 'The Beast' },
-  { id: 'chapter-two', number: '02', label: 'Fear' },
-  { id: 'chapter-three', number: '03', label: 'Awareness' },
-  { id: 'chapter-four', number: '04', label: 'The Other Path' },
-  { id: 'chapter-five', number: '05', label: 'True Strength' },
-  { id: 'chapter-six', number: '06', label: 'The Endless Path' },
-];
+  { id: 'home', number: '00', label: 'Prologue', nav: false },
+  { id: 'introduction', number: '00', label: 'Introduction', nav: true },
+  { id: 'chapter-one', number: '01', label: 'The Beast', nav: true },
+  { id: 'chapter-two', number: '02', label: 'Fear', nav: true },
+  { id: 'chapter-three', number: '03', label: 'Awareness', nav: true },
+  { id: 'chapter-four', number: '04', label: 'The Other Path', nav: true },
+  { id: 'chapter-five', number: '05', label: 'True Strength', nav: true },
+  { id: 'chapter-six', number: '06', label: 'The Endless Path', nav: true },
+] as const;
 
 let headerHeight = 76;
-let header: Element | null = null;
-let sectionElements: Map<string, HTMLElement> = new Map();
+let header: HTMLElement | null = null;
+const sectionElements = new Map<string, HTMLElement>();
+let scrollTriggers: ScrollTrigger[] = [];
+let lockedActiveId: string | null = null;
 
-export function initNavigation() {
-  header = document.querySelector('.site-header');
-  const currentNumberEl = document.querySelector('.site-nav__chapter-number');
-  const currentNameEl = document.querySelector('.site-nav__chapter-name');
+function updateHeaderHeight() {
+  headerHeight = (header?.clientHeight ?? 76) + 16;
+  document.documentElement.style.setProperty('--header-offset', `${headerHeight}px`);
+}
+
+function getSectionElement(id: string) {
+  if (!sectionElements.has(id)) {
+    const el = document.getElementById(id);
+    if (el) sectionElements.set(id, el);
+  }
+  return sectionElements.get(id);
+}
+
+function resolveActiveFromScroll() {
+  if (lockedActiveId) return;
+
+  const probe = headerHeight + 2;
+  let current: (typeof sections)[number]['id'] = sections[0].id;
+
+  for (const { id } of sections) {
+    const el = getSectionElement(id);
+    if (!el) continue;
+    if (el.getBoundingClientRect().top <= probe) {
+      current = id;
+    }
+  }
+
+  setActive(current);
+}
+
+function setActive(id: string) {
+  if (lockedActiveId && id !== lockedActiveId) return;
+
   const navLinks = document.querySelectorAll('[data-nav-item]');
   const mobileNavLinks = document.querySelectorAll('[data-mobile-nav-item]');
+  const currentNumberEl = document.querySelector('.site-nav__chapter-number');
+  const currentNameEl = document.querySelector('.site-nav__chapter-name');
 
-  gsap.registerPlugin(ScrollTrigger);
-
-  function updateHeaderHeight() {
-    headerHeight = (header?.clientHeight ?? 76) + 16;
-  }
-
-  function setActive(id: string) {
-    navLinks.forEach((link) => {
-      const linkId = link.getAttribute('data-nav-item');
-      const isActive = linkId === id;
-      link.setAttribute('aria-current', isActive ? 'location' : 'false');
-    });
-
-    mobileNavLinks.forEach((link) => {
-      const linkId = link.getAttribute('data-mobile-nav-item');
-      const isActive = linkId === id;
-      link.setAttribute('aria-current', isActive ? 'location' : 'false');
-    });
-
-    const section = sections.find((s) => s.id === id);
-    if (section && currentNumberEl && currentNameEl) {
-      currentNumberEl.textContent = section.number;
-      currentNameEl.textContent = section.label;
-    }
-  }
-
-  function getSectionElement(id: string) {
-    if (!sectionElements.has(id)) {
-      const el = document.getElementById(id);
-      if (el) sectionElements.set(id, el);
-    }
-    return sectionElements.get(id);
-  }
-
-  function handleHashChange() {
-    const hash = window.location.hash.replace('#', '');
-    if (!hash) {
-      setActive('introduction');
-      return;
-    }
-    const section = sections.find((s) => s.id === hash);
-    if (section) {
-      setActive(hash);
-      scrollToSection(hash, false);
-    }
-  }
-
-  updateHeaderHeight();
-  window.addEventListener('resize', updateHeaderHeight, { passive: true });
-
-  sections.forEach(({ id }) => {
-    const el = getSectionElement(id);
-    if (!el) return;
-
-    ScrollTrigger.create({
-      trigger: el,
-      start: `top ${headerHeight}px`,
-      end: `bottom ${headerHeight}px`,
-      onEnter: () => setActive(id),
-      onEnterBack: () => setActive(id),
-    });
+  navLinks.forEach((link) => {
+    const linkId = link.getAttribute('data-nav-item');
+    const isActive = linkId === id;
+    link.setAttribute('aria-current', isActive ? 'location' : 'false');
   });
 
-  // Single anchor navigation handler for all internal links.
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', (event) => {
-      const href = anchor.getAttribute('href');
-      if (!href) return;
-
-      const targetId = href.replace('#', '');
-      const target = getSectionElement(targetId);
-      if (!target) return;
-
-      event.preventDefault();
-      closeMobileMenu();
-
-      // Update history and active state immediately.
-      window.history.pushState(null, '', href);
-      setActive(targetId);
-
-      scrollToSection(targetId, true);
-    });
+  mobileNavLinks.forEach((link) => {
+    const linkId = link.getAttribute('data-mobile-nav-item');
+    const isActive = linkId === id;
+    link.setAttribute('aria-current', isActive ? 'location' : 'false');
   });
 
-  // Handle initial hash and browser back/forward.
-  handleHashChange();
-  window.addEventListener('popstate', handleHashChange);
-
-  return {
-    refresh() {
-      updateHeaderHeight();
-      ScrollTrigger.refresh();
-    },
-  };
+  const section = sections.find((s) => s.id === id);
+  if (section && currentNumberEl && currentNameEl) {
+    currentNumberEl.textContent = section.number;
+    currentNameEl.textContent = section.label;
+  }
 }
 
 export function scrollToSection(id: string, animate = true) {
-  const target = document.getElementById(id);
+  const target = getSectionElement(id) ?? document.getElementById(id);
   if (!target) return;
 
   updateHeaderHeight();
-  const top = target.getBoundingClientRect().top + window.scrollY - headerHeight;
-  const lenis = getLenis();
+
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lenis = getLenis();
+  const offset = -headerHeight;
+
+  const unlock = () => {
+    lockedActiveId = null;
+    resolveActiveFromScroll();
+  };
 
   if (lenis && !reducedMotion && animate) {
-    lenis.scrollTo(top, {
+    lockedActiveId = sections.some((s) => s.id === id) ? id : lockedActiveId;
+    lenis.scrollTo(target, {
+      offset,
       duration: 1.2,
       immediate: false,
+      onComplete: unlock,
     });
-  } else {
-    window.scrollTo({
-      top,
-      behavior: reducedMotion || !animate ? 'auto' : 'smooth',
-    });
+    return;
   }
-}
 
-function updateHeaderHeight() {
-  headerHeight = ((header?.clientHeight ?? 76) + 16);
+  lockedActiveId = sections.some((s) => s.id === id) ? id : lockedActiveId;
+  const top = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+  window.scrollTo({
+    top,
+    behavior: reducedMotion || !animate ? 'auto' : 'smooth',
+  });
+
+  window.setTimeout(unlock, reducedMotion || !animate ? 0 : 500);
 }
 
 let mobileNavState: {
   mobileNav: HTMLElement;
-  toggleButton: Element;
+  toggleButton: HTMLElement;
   lastFocusedElement: Element | null;
 } | null = null;
 
@@ -160,10 +127,92 @@ function closeMobileMenu() {
   mobileNav.setAttribute('aria-hidden', 'true');
   toggleButton.setAttribute('aria-expanded', 'false');
   document.body.style.overflow = '';
+  document.documentElement.classList.remove('mobile-nav-open');
 
   if (lastFocusedElement instanceof HTMLElement) {
     lastFocusedElement.focus();
   }
+}
+
+export function initNavigation() {
+  header = document.querySelector('.site-header');
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function handleHashChange() {
+    const hash = window.location.hash.replace('#', '');
+    if (!hash || hash === 'main-content') {
+      lockedActiveId = null;
+      setActive('home');
+      return;
+    }
+
+    const section = sections.find((s) => s.id === hash);
+    if (section) {
+      lockedActiveId = hash;
+      setActive(hash);
+      scrollToSection(hash, false);
+    }
+  }
+
+  updateHeaderHeight();
+  window.addEventListener('resize', () => {
+    updateHeaderHeight();
+    ScrollTrigger.refresh();
+    resolveActiveFromScroll();
+  }, { passive: true });
+
+  scrollTriggers.forEach((trigger) => trigger.kill());
+  scrollTriggers = [];
+
+  // One controller only — resolve the section under the header probe line.
+  const trigger = ScrollTrigger.create({
+    start: 0,
+    end: 'max',
+    onUpdate: resolveActiveFromScroll,
+    onRefresh: resolveActiveFromScroll,
+  });
+  scrollTriggers.push(trigger);
+
+  document.addEventListener('click', (event) => {
+    const anchor = (event.target as Element | null)?.closest?.('a[href^="#"]');
+    if (!(anchor instanceof HTMLAnchorElement)) return;
+
+    const href = anchor.getAttribute('href');
+    if (!href || href === '#') return;
+
+    const targetId = href.slice(1);
+    const target = getSectionElement(targetId) ?? document.getElementById(targetId);
+    if (!target) return;
+
+    event.preventDefault();
+    closeMobileMenu();
+
+    window.history.pushState(null, '', href);
+
+    if (sections.some((s) => s.id === targetId)) {
+      lockedActiveId = targetId;
+      setActive(targetId);
+    }
+
+    scrollToSection(targetId, true);
+  });
+
+  handleHashChange();
+  window.addEventListener('popstate', handleHashChange);
+  resolveActiveFromScroll();
+
+  return {
+    refresh() {
+      updateHeaderHeight();
+      ScrollTrigger.refresh();
+      resolveActiveFromScroll();
+    },
+    destroy() {
+      scrollTriggers.forEach((t) => t.kill());
+      scrollTriggers = [];
+    },
+  };
 }
 
 export function initMobileNavigation() {
@@ -171,7 +220,9 @@ export function initMobileNavigation() {
   const mobileNav = document.getElementById('mobile-nav');
   const closeButton = mobileNav?.querySelector('.mobile-nav__close');
 
-  if (!toggleButton || !mobileNav) return;
+  if (!(toggleButton instanceof HTMLElement) || !(mobileNav instanceof HTMLElement)) {
+    return;
+  }
 
   mobileNavState = {
     mobileNav,
@@ -187,14 +238,24 @@ export function initMobileNavigation() {
     mobileNavState.mobileNav.setAttribute('aria-hidden', 'false');
     mobileNavState.toggleButton.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+    document.documentElement.classList.add('mobile-nav-open');
 
     const firstLink = mobileNavState.mobileNav.querySelector('a');
     if (firstLink instanceof HTMLElement) {
       firstLink.focus();
     }
+
+    ScrollTrigger.refresh();
   }
 
-  toggleButton.addEventListener('click', openMenu);
+  toggleButton.addEventListener('click', () => {
+    const expanded = toggleButton.getAttribute('aria-expanded') === 'true';
+    if (expanded) {
+      closeMobileMenu();
+    } else {
+      openMenu();
+    }
+  });
 
   closeButton?.addEventListener('click', closeMobileMenu);
 
@@ -205,6 +266,8 @@ export function initMobileNavigation() {
   });
 
   document.addEventListener('keydown', (event) => {
+    if (!mobileNavState?.mobileNav.classList.contains('is-open')) return;
+
     if (event.key === 'Escape') {
       closeMobileMenu();
       return;
@@ -228,8 +291,15 @@ export function initMobileNavigation() {
   });
 }
 
+/**
+ * Development helper: true when desktop chapter links overflow their container.
+ */
 export function checkNavigationOverflow() {
   const nav = document.querySelector('.site-nav__links');
   if (!nav) return false;
-  return nav.scrollWidth > nav.clientWidth;
+
+  const style = window.getComputedStyle(nav);
+  if (style.display === 'none') return false;
+
+  return nav.scrollWidth > nav.clientWidth + 1;
 }
