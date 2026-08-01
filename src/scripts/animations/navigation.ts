@@ -91,12 +91,12 @@ export function scrollToSection(id: string, animate = true) {
     resolveActiveFromScroll();
   };
 
-  if (lenis && !reducedMotion && animate) {
+  if (lenis && !reducedMotion) {
     lockedActiveId = sections.some((s) => s.id === id) ? id : lockedActiveId;
     lenis.scrollTo(target, {
       offset,
-      duration: 1.2,
-      immediate: false,
+      duration: animate ? 1.2 : 0,
+      immediate: !animate,
       onComplete: unlock,
     });
     return;
