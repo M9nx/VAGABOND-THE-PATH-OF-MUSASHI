@@ -1,15 +1,30 @@
 /* ==================================================
    Compact desktop
+   Breakpoint chosen from browser overflow checks:
+   full chapter row needs ~1360px+ once the brand subtitle is present,
+   and still overflows around 1280–1320 with subtitle hidden.
+   Compact mode therefore starts at 1360px.
 ================================================== */
 
-@media (max-width: 1280px) {
+@media (max-width: 1600px) {
+  .site-nav__brand-subtitle {
+    display: none;
+  }
+}
+
+@media (max-width: 1360px) {
+  /* Links are display:none, so only brand + status participate in the grid. */
   .site-nav {
-    grid-template-columns: max-content 1fr max-content;
-    gap: 1.5rem;
+    grid-template-columns: 1fr auto;
+    column-gap: 1.25rem;
   }
 
   .site-nav__links {
     display: none;
+  }
+
+  .site-nav__chapter {
+    display: flex;
   }
 
   .site-nav__menu-button {
@@ -47,10 +62,6 @@
   :root {
     --page-gutter: clamp(1rem, 4vw, 2rem);
     --section-space: clamp(5rem, 13vw, 8rem);
-  }
-
-  .site-nav {
-    grid-template-columns: 1fr auto;
   }
 
   .site-nav__brand-subtitle {
