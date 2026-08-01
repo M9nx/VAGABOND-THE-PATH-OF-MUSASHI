@@ -285,7 +285,7 @@ export const chapters: Chapter[] = [
   {
     id: 'chapter-six',
     number: '06',
-    navigationLabel: 'Endless Path',
+    navigationLabel: 'The Endless Path',
     eyebrow: 'The endless path',
     title: 'The strongest is never finished',
     meta: [
