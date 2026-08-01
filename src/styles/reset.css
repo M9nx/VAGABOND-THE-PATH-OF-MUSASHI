@@ -95,12 +95,21 @@ table {
   border-spacing: 0;
 }
 
-:target {
+:target,
+.chapter,
+.introduction,
+.hero,
+#main-content {
   scroll-margin-top: calc(var(--header-height) + 1rem);
 }
 
-[id] {
-  scroll-margin-top: calc(var(--header-height) + 1rem);
+/* Lenis uses an explicit offset; avoid stacking CSS scroll-margin on top. */
+html[data-smooth-scroll="true"] :target,
+html[data-smooth-scroll="true"] .chapter,
+html[data-smooth-scroll="true"] .introduction,
+html[data-smooth-scroll="true"] .hero,
+html[data-smooth-scroll="true"] #main-content {
+  scroll-margin-top: 0;
 }
 
 @media (max-width: 900px) {
