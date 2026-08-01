@@ -1,6 +1,6 @@
 # Responsive Validation Matrix
 
-Generated: 2026-08-01T09:32:46.330Z
+Generated: 2026-08-01T09:34:50.181Z
 
 | Viewport | Header | Hero | Intro | Ch1 | Ch2 | Ch3 | Ch4 | Ch5 | Ch6 | Footer | Overflow |
 |----------|--------|------|-------|-----|-----|-----|-----|-----|-----|--------|----------|
@@ -50,66 +50,24 @@ Generated: 2026-08-01T09:32:46.330Z
 - 1920x1080: desktop-links
 - 2560x1440: desktop-links
 
+## Overflow culprits (failing viewports)
+
+- 320x568: [{"tag":"div","className":"site-footer__brand","right":338},{"tag":"a","className":"site-footer__logo","right":338},{"tag":"p","className":"","right":338},{"tag":"nav","className":"site-footer__navigation","right":338},{"tag":"h2","className":"","right":338},{"tag":"ul","className":"","right":338},{"tag":"li","className":"","right":338},{"tag":"a","className":"","right":338}]
+- 932x430: []
+- 1024x1366: [{"tag":"img","className":"","right":1055},{"tag":"img","className":"","right":1055},{"tag":"img","className":"","right":1055}]
+- 1024x768: [{"tag":"img","className":"","right":1055},{"tag":"img","className":"","right":1055},{"tag":"img","className":"","right":1055}]
+- 1180x820: [{"tag":"img","className":"","right":1215},{"tag":"img","className":"","right":1215},{"tag":"img","className":"","right":1215}]
+- 1280x720: [{"tag":"img","className":"","right":1318},{"tag":"img","className":"","right":1318},{"tag":"img","className":"","right":1318}]
+- 1280x800: [{"tag":"img","className":"","right":1318},{"tag":"img","className":"","right":1318},{"tag":"img","className":"","right":1318}]
+- 1366x768: [{"tag":"img","className":"","right":1407},{"tag":"img","className":"","right":1407},{"tag":"img","className":"","right":1407}]
+- 1440x900: [{"tag":"img","className":"","right":1483},{"tag":"img","className":"","right":1483},{"tag":"img","className":"","right":1483}]
+- 1536x864: [{"tag":"img","className":"","right":1582},{"tag":"img","className":"","right":1582},{"tag":"img","className":"","right":1582}]
+
 ## Asset path checks
 
-- Base-prefixed video sources present: false
+- Base-prefixed video sources present: true
 - Bare /videos root paths present: false
 
 ## Console errors
 
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
-- Failed to load resource: the server responded with a status of 404 (Not Found)
+none
