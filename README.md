@@ -15,6 +15,7 @@ npm install
 npm run dev
 ```
 
+
 Open the local URL Astro prints. With the GitHub Pages `base` configured, the app is served under `/VAGABOND-THE-PATH-OF-MUSASHI/`.
 
 ## Validation
